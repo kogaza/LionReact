@@ -1,0 +1,131 @@
+*{
+    box-sizing: border-box;
+  }
+  html, body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  body{
+    background-color: #eee;
+    font-family: sans;
+  }
+  .wrapper{
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .game-box{
+    width: 99%;
+    max-width: 400px;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+  .cell-label{
+    color: #f5773a;
+    text-align: center;
+    vertical-align: middle;
+    padding: 8px;
+  }
+  .cell{
+    border: 2px dashed #f5773a;
+    position: relative;
+    width: 33%;
+  }
+  /*wszystko co w cellu*/
+  .cell *{
+    pointer-events: none;
+  }
+  .cell:after{
+    display: block;
+    content: '';
+    padding-top: 100%;
+  }
+  .cell-move{
+    background-color: #f5d28e;
+    cursor: pointer;
+  }
+  .cell-selected{
+    background-color: #fab124;
+  }
+  .cell-available{
+    background-color: #7cfa63;
+  }
+  .animal{
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    top: 10%;
+    left: 10%;
+    background-color: #fff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .animal.blue{
+    transform: rotate(180deg);
+  }
+  .dot{
+    width: 10%;
+    height: 10%;
+    border: 1px solid #800;
+    background-color: #f00;
+    border-radius: 50%;
+    position: absolute;
+  }
+  .dot-top{
+    top: 5%;
+    left: calc(50%-7px);
+  }
+  .dot-right{
+    top: calc(50%-7px);
+    right: 5%;
+  }
+  .dot-bottom{
+    bottom: 5%;
+    left: calc(50%-7px);
+  }
+  .dot-left{
+    top: calc(50%-7px);
+    left: 5%;
+  }
+  .dot-top-left{
+    top: 5%;
+    left: 5%;
+  }
+  .dot-top-right{
+    top: 5%;
+    right: 5%;
+  }
+  .dot-bottom-left{
+    bottom: 5%;
+    left: 5%;
+  }
+  .dot-bottom-right{
+    bottom: 5%;
+    right: 5%;
+  }
+  .giraffe{
+    background-color: blue;
+    background-image: url("../../images/giraffe.jpeg");
+    background-size: cover;
+  }
+  .lion{
+    background-color: orange;    
+    background-image: url("../../images/lion.jpeg");
+    background-size: cover;
+  }
+  .elephant{
+    background-color: red;    
+    background-image: url("../../images/elephant.jpeg");
+    background-size: cover;
+  }
+  .chicken{
+    background-color: yellow;    
+    background-image: url("../../images/chicken.jpg");
+    background-size: cover;
+  }
+  
