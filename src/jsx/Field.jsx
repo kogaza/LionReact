@@ -1,5 +1,4 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
+
 
 class Field {
     constructor(cellNumber){
@@ -120,6 +119,7 @@ class Field {
         console.log("sąsiedzi",this.availableCells);
 
     }
+ 
 }
 
 let nowy = new Field(6);

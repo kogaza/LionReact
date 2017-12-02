@@ -9614,9 +9614,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-
 var Field = function () {
     function Field(cellNumber) {
         _classCallCheck(this, Field);
@@ -9710,13 +9707,9 @@ var _Board = __webpack_require__(186);
 
 var _Board2 = _interopRequireDefault(_Board);
 
-var _Field = __webpack_require__(83);
+var _Pawn = __webpack_require__(197);
 
-var _Field2 = _interopRequireDefault(_Field);
-
-var _Moves = __webpack_require__(196);
-
-var _Moves2 = _interopRequireDefault(_Moves);
+var _Pawn2 = _interopRequireDefault(_Pawn);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9740,13 +9733,7 @@ var App = function (_React$Component) {
             selectedCell: false, //które pole jest kliknięte
             availableCells: [], //dostępne pola do ruchu dla zaznaczonego
             //opis figur na planszy
-            board: [
-            // <Field type="giraffe" />,
-            // <Field type="empty" />,
-            // <Field type="giraffe" />,
-            // <Field type="giraffe" />,
-
-            ["giraffe", 0], ["lion", 0], ["elephant", 0], [], ["chicken", 0], [], [], ["chicken", 1], [], ["elephant", 1], ["lion", 1], ["giraffe", 1]]
+            board: [new _Pawn2.default(0, 'giraffe', 0), new _Pawn2.default(1, 'lion', 0), new _Pawn2.default(2, 'elephant', 0), null, new _Pawn2.default(4, 'chicken', 0), null, null, new _Pawn2.default(7, 'chicken', 1), null, new _Pawn2.default(9, 'elephant', 1), new _Pawn2.default(10, 'lion', 1), new _Pawn2.default(11, 'giraffe', 1)]
 
         };
         return _this;
@@ -9755,7 +9742,7 @@ var App = function (_React$Component) {
     _createClass(App, [{
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_Board2.default, null), _react2.default.createElement(_Field2.default, null);
+            return _react2.default.createElement(_Board2.default, { game: this.state.board });
         }
     }]);
 
@@ -22252,9 +22239,19 @@ var Board = function (_React$Component) {
     _inherits(Board, _React$Component);
 
     function Board() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
         _classCallCheck(this, Board);
 
-        return _possibleConstructorReturn(this, (Board.__proto__ || Object.getPrototypeOf(Board)).apply(this, arguments));
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Board.__proto__ || Object.getPrototypeOf(Board)).call.apply(_ref, [this].concat(args))), _this), _this.loadPicture = function () {
+            console.log(_this.props.game);
+        }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(Board, [{
@@ -22298,7 +22295,7 @@ var Board = function (_React$Component) {
                                 '1'
                             ),
                             _react2.default.createElement('td', { className: 'cell chicken', 'data-id': '0', 'data-pos': '2-1' }),
-                            _react2.default.createElement('td', { className: 'cell', 'data-id': '1' }),
+                            _react2.default.createElement('td', { className: 'cell', onLoad: this.loadPicture(), 'data-id': '1' }),
                             _react2.default.createElement('td', { className: 'cell', 'data-id': '2' })
                         ),
                         _react2.default.createElement(
@@ -22368,7 +22365,8 @@ module.exports = Board;
 /* 193 */,
 /* 194 */,
 /* 195 */,
-/* 196 */
+/* 196 */,
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22376,66 +22374,59 @@ module.exports = Board;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Field2 = __webpack_require__(83);
-
-var _Field3 = _interopRequireDefault(_Field2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+var Pawn = function () {
+    function Pawn(cellNumber, animal, player) {
+        _classCallCheck(this, Pawn);
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // import React from 'react';
-// import ReactDOM from 'react-dom';
-
-
-var Moves = function (_Field) {
-    _inherits(Moves, _Field);
-
-    function Moves(cellNumber, animal, player) {
-        _classCallCheck(this, Moves);
-
-        var _this = _possibleConstructorReturn(this, (Moves.__proto__ || Object.getPrototypeOf(Moves)).call(this, cellNumber));
-
-        _this.animal = animal;
-        _this.player = player;
-        _this.canMove = [];
-        return _this;
+        this.cellNumber = cellNumber;
+        this.animal = animal;
+        this.player = player;
+        this.whatMoves();
     }
 
-    _createClass(Moves, [{
-        key: "whatMovesl",
-        value: function whatMovesl() {
-            if (this.animal === "Elephant") {
-                this.canMove = [this.number - 4, this.number - 2, this.number + 2, this.number + 4];
-            } else if (this.animal === "Lion") {
-                this.canMove = [this.number - 4, this.number - 3, this.number - 2, this.number - 1, this.number + 1, this.number + 2, this.number + 3, this.number + 4];
-            } else if (this.animal === "Giraffe") {
-                this.canMove = [this.number - 3, this.number - 1, this.number + 1, this.number + 3];
-            } else if (this.animal === "Chicken") {
-                if (this.player === 0) this.canMove = [this.number + 3];else this.canMove = [this.number - 3];
-            } else if (this.animal === "SuperChicken") {
+    _createClass(Pawn, [{
+        key: "whatMoves",
+        value: function whatMoves() {
+
+            if (this.animal === "elephant") {
+                this.canMove = [this.cellNumber - 4, this.cellNumber - 2, this.cellNumber + 2, this.cellNumber + 4].filter(function (cell) {
+                    return cell >= 0 && cell < 12;
+                });
+            } else if (this.animal === "lion") {
+                this.canMove = [this.cellNumber - 4, this.cellNumber - 3, this.cellNumber - 2, this.cellNumber - 1, this.cellNumber + 1, this.cellNumber + 2, this.cellNumber + 3, this.cellNumber + 4].filter(function (cell) {
+                    return cell >= 0 && cell < 12;
+                });
+            } else if (this.animal === "giraffe") {
+                this.canMove = [this.cellNumber - 3, this.cellNumber - 1, this.cellNumber + 1, this.cellNumber + 3].filter(function (cell) {
+                    return cell >= 0 && cell < 12;
+                });
+            } else if (this.animal === "chicken") {
+                if (this.player === 0) this.canMove = [this.cellNumber + 3];else this.canMove = [this.cellNumber - 3];
+            } else if (this.animal === "superChicken") {
                 if (this.player === 0) {
-                    this.canMove = [this.number - 4, this.number - 3, this.number - 2, this.number - 1, this.number + 1, this.number + 3];
+                    this.canMove = [this.cellNumber - 4, this.cellNumber - 3, this.cellNumber - 2, this.cellNumber - 1, this.cellNumber + 1, this.cellNumber + 3].filter(function (cell) {
+                        return cell >= 0 && cell < 12;
+                    });
                 } else {
-                    this.canMove = [this.number - 3, this.number - 1, this.number + 1, this.number + 2, this.number + 3, this.number + 4];
+                    this.canMove = [this.number - 3, this.number - 1, this.number + 1, this.number + 2, this.number + 3, this.number + 4].filter(function (cell) {
+                        return cell >= 0 && cell < 12;
+                    });
                 }
             }
         }
     }, {
-        key: "moves",
-        value: function moves() {}
+        key: "getAvailableMoves",
+        value: function getAvailableMoves(boardArray) {
+            this.availableMoves = [];
+        }
     }]);
 
-    return Moves;
-}(_Field3.default);
+    return Pawn;
+}();
 
-var giraffe = new Moves(3, 'Chicken', 0);
-giraffe.whatMovesl();
-// console.log(giraffe);
-
-module.exports = Moves;
+module.exports = Pawn;
 
 /***/ })
 /******/ ]);

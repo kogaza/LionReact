@@ -4,6 +4,10 @@ import Field from "./Field.jsx";
 
 class Board extends React.Component{
     
+    loadPicture = () => {
+        console.log(this.props.game);
+    }
+
     render(){
         return <div className="wrapper">
             <table className="game-box">
@@ -17,7 +21,7 @@ class Board extends React.Component{
                     <tr className="row">
                         <td className="cell-label">1</td>
                         <td className="cell chicken" data-id="0" data-pos="2-1"></td>
-                        <td className="cell" data-id="1"></td>
+                        <td className="cell" onLoad={this.loadPicture()} data-id="1"></td>
                         <td className="cell" data-id="2"></td>
                     </tr>
                     <tr className="row">
