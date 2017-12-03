@@ -1,16 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Field from "./Field.jsx";
+import Dots from "./Dots.jsx";
 
 class Board extends React.Component{
     
-
-
-    loadPicture = () => {
-        // var classNames = require('classnames');
-        console.log(this.props.game);
-        // classNames('cell','lion');
-    }
 
     handleClickPawn = (e) => {
         console.log('clicked '+e.target.dataset.index);
@@ -50,9 +44,13 @@ class Board extends React.Component{
                                                         let classes = "animal " + p.classes.join(' ');
                                                         
                                                         return <td key={i} data-index={fieldIndex+i} className="cell" onClick={this.handleClickPawn}>
-                                                                <div className={classes}>
-                                                                    {/* <Dots /> */}
-                                                                </div>
+                                                                
+                                                                <Dots field={p} classes={classes}/>
+
+                                                                
+                                                                {/* <div className={classes}>
+                                                                    <Dots fields={fields}/>
+                                                                </div> */}
                                                             </td>;
                                                     }
                                                   })
@@ -65,11 +63,11 @@ class Board extends React.Component{
             }
             
         }
-        console.log(boardFields);
+        console.log(fields);
 
         let board = <div className="wrapper">
                         <table className="game-box">
-                            <tbody>{boardFields.concat('')}</tbody>
+                            <tbody>{boardFields}</tbody>
                         </table>
                         <h1>Catch The Lion</h1>
                     </div>;

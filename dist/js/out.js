@@ -22157,6 +22157,10 @@ var _Field = __webpack_require__(196);
 
 var _Field2 = _interopRequireDefault(_Field);
 
+var _Dots = __webpack_require__(197);
+
+var _Dots2 = _interopRequireDefault(_Dots);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22179,11 +22183,7 @@ var Board = function (_React$Component) {
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Board.__proto__ || Object.getPrototypeOf(Board)).call.apply(_ref, [this].concat(args))), _this), _this.loadPicture = function () {
-            // var classNames = require('classnames');
-            console.log(_this.props.game);
-            // classNames('cell','lion');
-        }, _this.handleClickPawn = function (e) {
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Board.__proto__ || Object.getPrototypeOf(Board)).call.apply(_ref, [this].concat(args))), _this), _this.handleClickPawn = function (e) {
             console.log('clicked ' + e.target.dataset.index);
             if (typeof _this.props.clickPawn === 'function') {
                 _this.props.clickPawn(e.target.dataset.index);
@@ -22245,7 +22245,7 @@ var Board = function (_React$Component) {
                                 return _react2.default.createElement(
                                     'td',
                                     { key: i, 'data-index': fieldIndex + i, className: 'cell', onClick: _this2.handleClickPawn },
-                                    _react2.default.createElement('div', { className: classes })
+                                    _react2.default.createElement(_Dots2.default, { field: p, classes: classes })
                                 );
                             }
                         })
@@ -22253,7 +22253,7 @@ var Board = function (_React$Component) {
                     fieldIndex += 3;
                 }
             }
-            console.log(boardFields);
+            console.log(fields);
 
             var board = _react2.default.createElement(
                 'div',
@@ -22264,7 +22264,7 @@ var Board = function (_React$Component) {
                     _react2.default.createElement(
                         'tbody',
                         null,
-                        boardFields.concat('')
+                        boardFields
                     )
                 ),
                 _react2.default.createElement(
@@ -22435,6 +22435,132 @@ var nowy = new Field(6);
 nowy.neighbor();
 
 module.exports = Field;
+
+/***/ }),
+/* 197 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(83);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(99);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _Board = __webpack_require__(185);
+
+var _Board2 = _interopRequireDefault(_Board);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Dots = function (_React$Component) {
+    _inherits(Dots, _React$Component);
+
+    function Dots() {
+        _classCallCheck(this, Dots);
+
+        return _possibleConstructorReturn(this, (Dots.__proto__ || Object.getPrototypeOf(Dots)).apply(this, arguments));
+    }
+
+    _createClass(Dots, [{
+        key: 'render',
+        value: function render() {
+
+            var dotsMove;
+
+            if (this.props.field.animal === "elephant") {
+                dotsMove = _react2.default.createElement(
+                    'div',
+                    { className: this.props.classes },
+                    _react2.default.createElement('div', { className: 'dot dot-top-left' }),
+                    _react2.default.createElement('div', { className: 'dot dot-top-right' }),
+                    _react2.default.createElement('div', { className: 'dot dot-bottom-right' }),
+                    _react2.default.createElement('div', { className: 'dot dot-bottom-left' })
+                );
+            } else if (this.props.field.animal === "lion") {
+                dotsMove = _react2.default.createElement(
+                    'div',
+                    { className: this.props.classes },
+                    _react2.default.createElement('div', { className: 'dot dot-left' }),
+                    _react2.default.createElement('div', { className: 'dot dot-top-left' }),
+                    _react2.default.createElement('div', { className: 'dot dot-top' }),
+                    _react2.default.createElement('div', { className: 'dot dot-top-right' }),
+                    _react2.default.createElement('div', { className: 'dot dot-right' }),
+                    _react2.default.createElement('div', { className: 'dot dot-bottom-right' }),
+                    _react2.default.createElement('div', { className: 'dot dot-bottom' }),
+                    _react2.default.createElement('div', { className: 'dot dot-bottom-left' })
+                );
+            } else if (this.props.field.animal === "giraffe") {
+                dotsMove = _react2.default.createElement(
+                    'div',
+                    { className: this.props.classes },
+                    _react2.default.createElement('div', { className: 'dot dot-left' }),
+                    _react2.default.createElement('div', { className: 'dot dot-top' }),
+                    _react2.default.createElement('div', { className: 'dot dot-right' }),
+                    _react2.default.createElement('div', { className: 'dot dot-bottom' })
+                );
+            } else if (this.props.field.animal === "chicken" && this.props.field.player === "green") {
+                dotsMove = _react2.default.createElement(
+                    'div',
+                    { className: this.props.classes },
+                    _react2.default.createElement('div', { className: 'dot dot-top' })
+                );
+            } else if (this.props.field.animal === "chicken" && this.props.field.player === "blue") {
+                dotsMove = _react2.default.createElement(
+                    'div',
+                    { className: this.props.classes },
+                    _react2.default.createElement('div', { className: 'dot dot-bottom' })
+                );
+            } else if (this.props.field.animal === "superChicken" && this.props.field.player === "green") {
+                dotsMove = _react2.default.createElement(
+                    'div',
+                    { className: this.props.classes },
+                    _react2.default.createElement('div', { className: 'dot dot-left' }),
+                    _react2.default.createElement('div', { className: 'dot dot-top-left' }),
+                    _react2.default.createElement('div', { className: 'dot dot-top' }),
+                    _react2.default.createElement('div', { className: 'dot dot-top-right' }),
+                    _react2.default.createElement('div', { className: 'dot dot-right' }),
+                    _react2.default.createElement('div', { className: 'dot dot-bottom' })
+                );
+            } else if (this.props.field.animal === "superChicken" && this.props.field.player === "blue") {
+                dotsMove = _react2.default.createElement(
+                    'div',
+                    { className: this.props.classes },
+                    _react2.default.createElement('div', { className: 'dot dot-left' }),
+                    _react2.default.createElement('div', { className: 'dot dot-top' }),
+                    _react2.default.createElement('div', { className: 'dot dot-right' }),
+                    _react2.default.createElement('div', { className: 'dot dot-bottom-right' }),
+                    _react2.default.createElement('div', { className: 'dot dot-bottom' }),
+                    _react2.default.createElement('div', { className: 'dot dot-bottom-left' })
+                );
+            }
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                ' ',
+                dotsMove,
+                ' '
+            );
+        }
+    }]);
+
+    return Dots;
+}(_react2.default.Component);
+
+module.exports = Dots;
 
 /***/ })
 /******/ ]);
