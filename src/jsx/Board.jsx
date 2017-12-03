@@ -47,8 +47,13 @@ class Board extends React.Component{
                                                     if( p === null){
                                                         return <td key={i} data-index={fieldIndex+i} className="cell" onClick={this.handleClickPawn}></td>;
                                                     }else{
-                                                        let classes = p.classes.concat() + ' cell';
-                                                        return <td key={i} data-index={fieldIndex+i} className={classes} onClick={this.handleClickPawn}></td>;
+                                                        let classes = "animal " + p.classes.join(' ');
+                                                        let dotsClass = p.dotsMove.join(' ');
+                                                        return <td key={i} data-index={fieldIndex+i} className="cell" onClick={this.handleClickPawn}>
+                                                                <div className={classes}>
+                                                                    <Dots />
+                                                                </div>
+                                                            </td>;
                                                     }
                                                   })
                                          

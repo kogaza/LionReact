@@ -13,18 +13,18 @@ class App extends React.Component{
             availableCells: [], //dostępne pola do ruchu dla zaznaczonego
             //opis figur na planszy
             board: [
-                new Pawn(0, 'giraffe', 0),
-                new Pawn(1, 'lion', 0),
-                new Pawn(2, 'elephant', 0),
+                new Pawn(0, 'giraffe', "blue"),
+                new Pawn(1, 'lion', "blue"),
+                new Pawn(2, 'elephant', "blue"),
                 null,
-                new Pawn(4, 'chicken', 0),
+                new Pawn(4, 'chicken', "blue"),
                 null,
                 null,
-                new Pawn(7, 'chicken', 1),
+                new Pawn(7, 'chicken', "green"),
                 null,
-                new Pawn(9, 'elephant', 1),
-                new Pawn(10, 'lion', 1),
-                new Pawn(11, 'giraffe', 1),
+                new Pawn(9, 'elephant', "green"),
+                new Pawn(10, 'lion', "green"),
+                new Pawn(11, 'giraffe', "green"),
               ]
               
             

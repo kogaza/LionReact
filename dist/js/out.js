@@ -9638,7 +9638,7 @@ var App = function (_React$Component) {
             selectedCell: false, //które pole jest kliknięte
             availableCells: [], //dostępne pola do ruchu dla zaznaczonego
             //opis figur na planszy
-            board: [new _Pawn2.default(0, 'giraffe', 0), new _Pawn2.default(1, 'lion', 0), new _Pawn2.default(2, 'elephant', 0), null, new _Pawn2.default(4, 'chicken', 0), null, null, new _Pawn2.default(7, 'chicken', 1), null, new _Pawn2.default(9, 'elephant', 1), new _Pawn2.default(10, 'lion', 1), new _Pawn2.default(11, 'giraffe', 1)]
+            board: [new _Pawn2.default(0, 'giraffe', "blue"), new _Pawn2.default(1, 'lion', "blue"), new _Pawn2.default(2, 'elephant', "blue"), null, new _Pawn2.default(4, 'chicken', "blue"), null, null, new _Pawn2.default(7, 'chicken', "green"), null, new _Pawn2.default(9, 'elephant', "green"), new _Pawn2.default(10, 'lion', "green"), new _Pawn2.default(11, 'giraffe', "green")]
 
         };
         return _this;
@@ -22240,8 +22240,17 @@ var Board = function (_React$Component) {
                             if (p === null) {
                                 return _react2.default.createElement('td', { key: i, 'data-index': fieldIndex + i, className: 'cell', onClick: _this2.handleClickPawn });
                             } else {
-                                var classes = p.classes.concat() + ' cell';
-                                return _react2.default.createElement('td', { key: i, 'data-index': fieldIndex + i, className: classes, onClick: _this2.handleClickPawn });
+                                var classes = "animal " + p.classes.join(' ');
+                                var dotsClass = p.dotsMove.join(' ');
+                                return _react2.default.createElement(
+                                    'td',
+                                    { key: i, 'data-index': fieldIndex + i, className: 'cell', onClick: _this2.handleClickPawn },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: classes },
+                                        _react2.default.createElement(Dots, null)
+                                    )
+                                );
                             }
                         })
                     ));
@@ -22296,8 +22305,8 @@ var Pawn = function () {
         this.cellNumber = cellNumber;
         this.animal = animal;
         this.player = player;
+        this.classes = [animal, player];
         this.whatMoves();
-        this.classes = [animal];
     }
 
     _createClass(Pawn, [{

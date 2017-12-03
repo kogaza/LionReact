@@ -4,8 +4,8 @@ class Pawn {
         this.cellNumber = cellNumber;
         this.animal = animal;
         this.player = player;
+        this.classes = [animal,player];
         this.whatMoves();
-        this.classes = [animal];
         
     }
 
@@ -66,6 +66,9 @@ class Pawn {
             }
         }
     }
+
+    
+    
     getAvailableMoves(boardArray) {
         this.availableMoves = [];
         
