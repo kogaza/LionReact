@@ -5,12 +5,11 @@ class Pawn {
         this.animal = animal;
         this.player = player;
         this.whatMoves();
+        this.classes = [animal];
         
     }
 
     whatMoves() {
-
-
 
         if(this.animal === "elephant") {
             this.canMove = [

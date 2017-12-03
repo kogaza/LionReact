@@ -26,13 +26,18 @@ class App extends React.Component{
                 new Pawn(10, 'lion', 1),
                 new Pawn(11, 'giraffe', 1),
               ]
+              
             
         }
     }
 
+    clickPawn(indexElem){
+        console.log(indexElem);
+    }
+
   render(){
         return (
-            <Board game={this.state.board}/>
+            <Board game={this.state.board} clickPawn={this.clickPawn} />
             
         )    
   }
