@@ -22241,15 +22241,11 @@ var Board = function (_React$Component) {
                                 return _react2.default.createElement('td', { key: i, 'data-index': fieldIndex + i, className: 'cell', onClick: _this2.handleClickPawn });
                             } else {
                                 var classes = "animal " + p.classes.join(' ');
-                                var dotsClass = p.dotsMove.join(' ');
+
                                 return _react2.default.createElement(
                                     'td',
                                     { key: i, 'data-index': fieldIndex + i, className: 'cell', onClick: _this2.handleClickPawn },
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: classes },
-                                        _react2.default.createElement(Dots, null)
-                                    )
+                                    _react2.default.createElement('div', { className: classes })
                                 );
                             }
                         })

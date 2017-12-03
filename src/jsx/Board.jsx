@@ -48,10 +48,10 @@ class Board extends React.Component{
                                                         return <td key={i} data-index={fieldIndex+i} className="cell" onClick={this.handleClickPawn}></td>;
                                                     }else{
                                                         let classes = "animal " + p.classes.join(' ');
-                                                        let dotsClass = p.dotsMove.join(' ');
+                                                        
                                                         return <td key={i} data-index={fieldIndex+i} className="cell" onClick={this.handleClickPawn}>
                                                                 <div className={classes}>
-                                                                    <Dots />
+                                                                    {/* <Dots /> */}
                                                                 </div>
                                                             </td>;
                                                     }
