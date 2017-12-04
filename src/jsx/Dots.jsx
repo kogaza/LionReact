@@ -36,17 +36,13 @@ class Dots extends React.Component{
                     <div className = "dot dot-bottom"></div>
                 </div>
         }
-        else if(this.props.field.animal === "chicken" && this.props.field.player === "green"){
+        else if(this.props.field.animal === "chicken" ){
             dotsMove = <div className={this.props.classes}>
                     <div className = "dot dot-top"></div>
                 </div>
         }
-        else if(this.props.field.animal === "chicken" && this.props.field.player === "blue"){
-            dotsMove = <div className={this.props.classes}>
-                    <div className = "dot dot-bottom"></div>
-                </div>
-        }
-        else if(this.props.field.animal === "superChicken" && this.props.field.player === "green"){
+
+        else if(this.props.field.animal === "superChicken"){
             dotsMove = <div className={this.props.classes}>
                     <div className = "dot dot-left"></div>
                     <div className = "dot dot-top-left"></div>
@@ -55,16 +51,7 @@ class Dots extends React.Component{
                     <div className = "dot dot-right"></div>
                     <div className = "dot dot-bottom"></div>
                 </div>
-        }
-        else if(this.props.field.animal === "superChicken" && this.props.field.player === "blue"){
-            dotsMove = <div className={this.props.classes}>
-                    <div className = "dot dot-left"></div>
-                    <div className = "dot dot-top"></div>
-                    <div className = "dot dot-right"></div>
-                    <div className = "dot dot-bottom-right"></div>
-                    <div className = "dot dot-bottom"></div>
-                    <div className = "dot dot-bottom-left"></div>
-                </div>
+        
         }
         
         return <div> {dotsMove} </div>

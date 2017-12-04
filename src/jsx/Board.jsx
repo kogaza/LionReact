@@ -5,7 +5,6 @@ import Dots from "./Dots.jsx";
 
 class Board extends React.Component{
     
-
     handleClickPawn = (e) => {
         console.log('clicked '+e.target.dataset.index);
         if(typeof this.props.clickPawn === 'function'){
@@ -15,7 +14,6 @@ class Board extends React.Component{
 
     render(){
 
-       
         let fieldIndex = 0;
         let rowNumber = 1;
         let boardFields = [];
@@ -42,15 +40,15 @@ class Board extends React.Component{
                                                         return <td key={i} data-index={fieldIndex+i} className="cell" onClick={this.handleClickPawn}></td>;
                                                     }else{
                                                         let classes = "animal " + p.classes.join(' ');
-                                                        
-                                                        return <td key={i} data-index={fieldIndex+i} className="cell" onClick={this.handleClickPawn}>
+                                                        let moves = "cell";
+                                                        if(this.props.whoMoves === p.player){
+                                                            moves += " cell-move";
+                                                        }
+                                                                
+                                                        return <td key={i} data-index={fieldIndex+i} className={moves} onClick={this.handleClickPawn}>
                                                                 
                                                                 <Dots field={p} classes={classes}/>
 
-                                                                
-                                                                {/* <div className={classes}>
-                                                                    <Dots fields={fields}/>
-                                                                </div> */}
                                                             </td>;
                                                     }
                                                   })
@@ -63,7 +61,6 @@ class Board extends React.Component{
             }
             
         }
-        console.log(fields);
 
         let board = <div className="wrapper">
                         <table className="game-box">
@@ -72,10 +69,8 @@ class Board extends React.Component{
                         <h1>Catch The Lion</h1>
                     </div>;
 
-
         return  board;
 
-        
     }
 }
 

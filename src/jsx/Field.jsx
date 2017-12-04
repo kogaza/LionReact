@@ -4,10 +4,10 @@ class Field {
     constructor(cellNumber){
         this.cellNumber = cellNumber;
         this.availableCells = [];
+        this.neighbor();
     }
     neighbor() {
-        console.log("numer",this.cellNumber);
-               
+                     
         switch (this.cellNumber) {
             case 0:
                 this.availableCells = [
@@ -116,7 +116,7 @@ class Field {
                 ];
                 break;
         }
-        console.log("sąsiedzi",this.availableCells);
+        
 
     }
  

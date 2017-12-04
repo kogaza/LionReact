@@ -40,7 +40,7 @@ class Pawn {
             ].filter((cell)=>(cell >=0 && cell<12))
         }
         else if(this.animal === "chicken") {
-            if(this.player === 0) this.canMove = [ this.cellNumber + 3 ]
+            if(this.player === "blue") this.canMove = [ this.cellNumber + 3 ]
             else this.canMove = [this.cellNumber - 3]
         }
         else if(this.animal === "superChicken") {
