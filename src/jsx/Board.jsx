@@ -4,74 +4,98 @@ import Field from "./Field.jsx";
 import Dots from "./Dots.jsx";
 
 class Board extends React.Component{
+  
+  handleClickPawn = (pawn) => {
+    if (pawn) {
+        console.log('clicked ' + pawn.cellNumber);
+        if(pawn.available === true){
+          this.props.moveHere(pawn.cellNumber);
+        }
+        else {
+          this.props.clickPawn(pawn.cellNumber);
+        }
+    }
+  }
+
+  render(){
+
+    let fieldIndex = 0;
+    let rowNumber = 1;
+    let boardFields = [];
+    let fields = this.props.game;
     
-    handleClickPawn = (e) => {
-        console.log('clicked '+e.target.dataset.index);
-        if(typeof this.props.clickPawn === 'function'){
-            this.props.clickPawn(e.target.dataset.index);
-        }
-    }
+    for(let i=0; i<5; i++){
+      
+      if(i==0){
+        boardFields.push(  <tr className="row">
+                    <td></td>
+                    <td className="cell-label">A</td>
+                    <td className="cell-label">B</td>
+                    <td className="cell-label">C</td>
+                  </tr>
+                );
+      }else{
 
-    render(){
+        boardFields.push(  <tr className="row">
+                    <td>{rowNumber++}</td>
+                    {
+                      fields.filter((v,i) => (i>=fieldIndex && i<fieldIndex+3) )
+                          .map( (p,i) => {
+                          if( p === null || p.type === null){
+                            return (
+                                <td 
+                                key={i} 
+                                data-index={fieldIndex+i}
+                                className={`cell ${p && p.available ? 'cell-available' : ''}`}
+                                onClick={() => this.handleClickPawn(p)}/>
+                            );
+                          }else{
+                            let classes = "animal " + p.classes.join(' ');
+                            let moves = "cell";
+                            if(this.props.whoMoves === p.player){
+                              moves += " cell-move";
+                            }
 
-        let fieldIndex = 0;
-        let rowNumber = 1;
-        let boardFields = [];
-        let fields = this.props.game;
+                            if(p.selected === true){
+                              moves += " cell-selected";
+                            }
+                            if(p.available === true){
+                              moves += " cell-available";
+                            }
+                                
+                            return <td key={i} data-index={fieldIndex+i} className={moves} 
+                            onClick={() => this.handleClickPawn(p)}>
+                                
+                                <Dots field={p} classes={classes}/>
+
+                              </td>;
+                          }
+                          })
+                     
+                    }
+                  </tr>
+                );
+        fieldIndex +=3;
         
-        for(let i=0; i<5; i++){
-          
-            if(i==0){
-                boardFields.push(    <tr className="row">
-                                        <td></td>
-                                        <td className="cell-label">A</td>
-                                        <td className="cell-label">B</td>
-                                        <td className="cell-label">C</td>
-                                    </tr>
-                                );
-            }else{
-
-                boardFields.push(    <tr className="row">
-                                        <td>{rowNumber++}</td>
-                                        {
-                                            fields.filter((v,i) => (i>=fieldIndex && i<fieldIndex+3) )
-                                                  .map( (p,i) => {
-                                                    if( p === null){
-                                                        return <td key={i} data-index={fieldIndex+i} className="cell" onClick={this.handleClickPawn}></td>;
-                                                    }else{
-                                                        let classes = "animal " + p.classes.join(' ');
-                                                        let moves = "cell";
-                                                        if(this.props.whoMoves === p.player){
-                                                            moves += " cell-move";
-                                                        }
-                                                                
-                                                        return <td key={i} data-index={fieldIndex+i} className={moves} onClick={this.handleClickPawn}>
-                                                                
-                                                                <Dots field={p} classes={classes}/>
-
-                                                            </td>;
-                                                    }
-                                                  })
-                                         
-                                        }
-                                    </tr>
-                                );
-                fieldIndex +=3;
-                
-            }
-            
-        }
-
-        let board = <div className="wrapper">
-                        <table className="game-box">
-                            <tbody>{boardFields}</tbody>
-                        </table>
-                        <h1>Catch The Lion</h1>
-                    </div>;
-
-        return  board;
-
+      }
+      
     }
+
+    let board = <div className="wrapper">
+            <table className="game-box">
+              <tbody>{boardFields}</tbody>
+            </table>
+            <h1>Catch The Lion</h1>
+          </div>;
+
+    return  board;
+
+  }
+}
+
+Board.propTypes = {
+    moveHere: React.PropTypes.func,
+    clickPawn: React.PropTypes.func
 }
 
 module.exports = Board;

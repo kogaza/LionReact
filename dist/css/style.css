@@ -51,7 +51,8 @@ body {
   background-color: #fab124; }
 
 .cell-available {
-  background-color: #7cfa63; }
+  background-color: #7cfa63;
+  cursor: pointer; }
 
 .animal {
   position: absolute;
