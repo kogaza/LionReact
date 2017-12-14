@@ -59,7 +59,7 @@ class Pawn {
       else this.canMove = [this.cellNumber - 3]
     }
     else if(this.animal === "superChicken") {
-      if(this.player === 0){
+      if(this.player === "green"){
         this.canMove = [
           this.cellNumber - 4,
           this.cellNumber - 3,
@@ -69,14 +69,14 @@ class Pawn {
           this.cellNumber + 3
         ].filter((cell)=>(cell >=0 && cell<12))
       }
-      else{
+      else {
         this.canMove = [
-          this.number - 3,
-          this.number - 1,
-          this.number + 1,
-          this.number + 2,
-          this.number + 3,
-          this.number + 4
+          this.cellNumber - 3,
+          this.cellNumber - 1,
+          this.cellNumber + 1,
+          this.cellNumber + 2,
+          this.cellNumber + 3,
+          this.cellNumber + 4
         ].filter((cell)=>(cell >=0 && cell<12))
       }
     }
@@ -84,10 +84,10 @@ class Pawn {
 
   
   
-  getAvailableMoves(boardArray) {
-    this.availableMoves = [];
+  // getAvailableMoves(boardArray) {
+  //   this.availableMoves = [];
     
-  }
+  // }
 }
 
 

@@ -2,8 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Field from "./Field.jsx";
 import Dots from "./Dots.jsx";
+import WaitingRoomGreen from "./WaitingRoomGreen.jsx";
+import WaitingRoomBlue from "./WaitingRoomBlue.jsx";
 
 class Board extends React.Component{
+  
+  clickMiniPawn = (pawn) => {
+    this.props.clickMiniPawn(pawn);
+  }
   
   handleClickPawn = (pawn) => {
     if (pawn) {
@@ -23,6 +29,8 @@ class Board extends React.Component{
     let rowNumber = 1;
     let boardFields = [];
     let fields = this.props.game;
+    let waitingRoomGreen = this.props.waitingRoomGreen;
+    let waitingRoomBlue = this.props.waitingRoomBlue;
     
     for(let i=0; i<5; i++){
       
@@ -81,11 +89,18 @@ class Board extends React.Component{
       
     }
 
-    let board = <div className="wrapper">
-            <table className="game-box">
-              <tbody>{boardFields}</tbody>
-            </table>
-            <h1>Catch The Lion</h1>
+    let board = <div className="container"> 
+             <WaitingRoomBlue waitingPowns={waitingRoomBlue}/>
+            <div className="wrapper">
+              <table className="game-box">
+                <tbody>{boardFields}</tbody>
+              </table>
+              <h1>Catch The Lion</h1>
+            </div>
+            <WaitingRoomGreen 
+              waitingPowns={waitingRoomGreen}
+              clickMiniPawn={(pawn) => this.clickMiniPawn(pawn)}
+            />
           </div>;
 
     return  board;
