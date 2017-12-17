@@ -2,11 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Board from './Board.jsx';
 import Pawn from './Pawn.jsx';
-import MiniPawn from './MiniPawn.jsx';
+import getMiniPawn from './MiniPawn.jsx';
 import Field from './Field.jsx';
 import Move from './Move.jsx';
-import WaitingRoomGreen from './WaitingRoomGreen.jsx';
-import WaitingRoomBlue from './WaitingRoomBlue.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -15,6 +13,7 @@ class App extends React.Component {
       isPlaying: true, //gra aktywna
       whoMoves: 'green', //czyj ruch: gracz blue (góra), gracz dół (green)
       selectedCell: false, //które pole jest kliknięte
+      selectedCellMini: false, //które pole Mini jest kliknięte
       availableCells: [], //dostępne pola do ruchu dla zaznaczonego
       waitingRoomGreen: [],
       waitingRoomBlue: [],
@@ -33,10 +32,9 @@ class App extends React.Component {
         new Pawn(10, 'lion', "green").getState(),
         new Pawn(11, 'giraffe', "green").getState(),
       ]
-
-
     }
   }
+
 
   clickPawn = (indexElem) => {
     // robimy kopien z aktualnego state
@@ -54,6 +52,26 @@ class App extends React.Component {
           pawn.player,
           false, false
         ).getState() :
+        null
+    );
+
+    newState.waitingRoomGreen = newState.waitingRoomGreen.map((pawn) =>
+    pawn ?
+        getMiniPawn(
+        pawn.animal,
+        pawn.player,
+        false
+        ) :
+        null
+    );
+
+    newState.waitingRoomBlue = newState.waitingRoomBlue.map((pawn) =>
+    pawn ?
+        getMiniPawn(
+        pawn.animal,
+        pawn.player,
+        false
+        ) :
         null
     );
     const currentPawn = newState.board[indexElem];
@@ -111,8 +129,8 @@ class App extends React.Component {
     this.setState(newState);
   }
   
-  clickMiniPawn = (pawn) => {
-    console.log("Działa clickMiniPawn");
+  clickMiniPawn = (pawn, clickedId) => {
+    console.log("Działa clickMiniPawn", clickedId, this);
      // robimy kopien z aktualnego state
      const newState = JSON.parse(JSON.stringify(this.state));
          // sprawdzam czy zaznaczono odpowiedni knefel
@@ -131,16 +149,97 @@ class App extends React.Component {
         null
     );
 
+
     //
+    let indexMiniElem; 
     //ustawienie select dla miniPawn
-    //
+
+    const greenRoom = newState.waitingRoomGreen;
+    const blueRoom = newState.waitingRoomBlue;
+
+    for(let i = 0; i < greenRoom.length; i++){
+      // console.log("i", i, "greenRoom",greenRoom[i].animal, "pawnAnimal", pawn.animal);
+        indexMiniElem = greenRoom[i].animal === pawn.animal ? i : indexMiniElem;    
+        // console.log("indexMiniElem",indexMiniElem);
+    }
+    // console.log("indexMiniElem",indexMiniElem);
+
+    newState.waitingRoomGreen = newState.waitingRoomGreen.map((pawn) =>
+    pawn ?
+        getMiniPawn(
+        pawn.animal,
+        pawn.player,
+        false
+        ) :
+        null
+    );
+    console.log("green",newState.waitingRoomGreen);
+
+    for(let i = 0; i < blueRoom.length; i++){
+        indexMiniElem = blueRoom[i].animal === pawn.animal ? i : indexMiniElem;    
+    }
+
+    newState.waitingRoomBlue = newState.waitingRoomBlue.map((pawn) =>
+    pawn ?
+        getMiniPawn(
+        pawn.animal,
+        pawn.player,
+        false
+        ) :
+        null
+    );
+    console.log("blue",newState.waitingRoomBlue);
+
+    let canAvailableCells=[];
+    for(let i = 0; i < 12; i++){
+      canAvailableCells.push(i);
+    }
+
+    canAvailableCells.forEach(id => {
+      const pawn = newState.board[id];
+      const newPawn = pawn === null || pawn.animal === undefined ?
+        { type: null, available: true, cellNumber: id } : pawn;
+      newState.board[id] = newPawn;
+    })
+
+    // ustawiamy selected elemen
+    console.log("whoMoves",newState.whoMoves);
+
+    let currentPawn;
+
+    if(newState.whoMoves === "green"){
+      currentPawn = newState.waitingRoomGreen[clickedId];
+      
+      newState.selectedCellMini = clickedId;
+      newState.waitingRoomGreen[clickedId] = getMiniPawn(
+        currentPawn.animal,
+        currentPawn.player,
+        true
+      );
+
+    } else if(newState.whoMoves === "blue"){
+      currentPawn = newState.waitingRoomBlue[clickedId];
+      
+      newState.selectedCellMini = clickedId;
+      newState.waitingRoomBlue[clickedId] = getMiniPawn(
+        currentPawn.animal,
+        currentPawn.player,
+        true
+      );
+    }
+
+    
+
+    console.log("selected Mini",newState.selectedCellMini);
+    console.log("waiting Room green",newState.waitingRoomGreen);
 
     this.setState(newState);
   }
 
   moveHere = (here) => {
     console.log('move here', here, 'from', this.state.selectedCell);
-    // robimy kopien z aktualnego state
+    // robimy kopie z aktualnego state
+    const startState = JSON.parse(JSON.stringify(this.state));
     const newState = JSON.parse(JSON.stringify(this.state));
     
     newState.board = newState.board.map((pawn) =>
@@ -153,8 +252,12 @@ class App extends React.Component {
       ).getState() :
       null
     );
-
-    const pawnToMove = newState.board[this.state.selectedCell];
+// console.log("sel",newState.selectedCell,newState.selectedCellMini);
+    const pawnToMove = newState.selectedCellMini === false ?
+      newState.board[this.state.selectedCell] :
+      newState.whoMoves === "green" ? 
+        newState.waitingRoomGreen[this.state.selectedCellMini] :
+        newState.waitingRoomBlue[this.state.selectedCellMini];
 
     //superChicken
     if(
@@ -181,14 +284,21 @@ class App extends React.Component {
         false, false
       ).getState()
 
-    console.log("Stare pole",newState.board[here]);
+    // console.log("Stare pole",newState.board[here]);
     newState.board[here].player = newState.board[here].player == "green" ? "blue" : "green";
+    if(newState.board[here].animal === "superChicken"){
+      newState.board[here].animal = "chicken";
+    }
+    if(newState.board[here].animal === "lion"){
+      alert(`Koniec gry - ${newState.whoMoves} wygrali`);
+      location.reload();
+    }
     const newMiniPawn = 
-      new MiniPawn(
+      getMiniPawn(
           newState.board[here].animal,
           newState.board[here].player
-      ).getState()
-      console.log("aaaaaa",newMiniPawn);
+      )
+      // console.log("aaaaaa",newMiniPawn);
 
     newState.board[here].animal !== undefined && 
       (newState.whoMoves === "green" ?
@@ -196,8 +306,17 @@ class App extends React.Component {
         newState.waitingRoomBlue.push(newMiniPawn)
       );
     newState.board[here] = newPawn;
-    newState.board[this.state.selectedCell] = null;
+
+    newState.selectedCellMini === false ?
+    newState.board[this.state.selectedCell] = null :
+    
+    newState.whoMoves === "green" ?
+      newState.waitingRoomGreen.splice(this.state.selectedCellMini,1) :
+      newState.waitingRoomBlue.splice(this.state.selectedCellMini,1);
+
     newState.whoMoves = newState.whoMoves == "green" ? "blue" : "green"; 
+    newState.selectedCell = false;
+    newState.selectedCellMini = false;
 
     this.setState(newState);
   }
@@ -209,7 +328,7 @@ class App extends React.Component {
         whoMoves={this.state.whoMoves}
         clickPawn={(id) => this.clickPawn(id)}
         moveHere={(here) => this.moveHere(here)}
-        clickMiniPawn={(pawn) => this.clickMiniPawn(pawn)}
+        clickMiniPawn={this.clickMiniPawn}
         waitingRoomGreen={this.state.waitingRoomGreen}
         waitingRoomBlue={this.state.waitingRoomBlue}
       />

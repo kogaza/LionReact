@@ -2,31 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class WaitingRoomBlue extends React.Component{
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     waitingRoom: []
-  //   }
-  // }
-  
-  // handleClickPawn = (pawn) => {
-  //   if (pawn) {
-  //       console.log('clicked ' + pawn.cellNumber);
-  //       if(pawn.available === true){
-  //         this.props.moveHere(pawn.cellNumber);
-  //       }
-  //       else {
-  //         this.props.clickPawn(pawn.cellNumber);
-  //       }
-  //   }
-  // }
+
+  clickMiniPawn = (pawn) => {
+    if (pawn) {
+      
+          this.props.clickMiniPawn(pawn);
+        
+    }
+  }
 
   render(){
     let waitingPowns = this.props.waitingPowns;
-console.log("WaitingRoom",waitingPowns);
+
     let board = <div className="taken taken-blue">
             {waitingPowns.map( (p,i) => 
-              <div key={i} className={`${p.classes.join(' ')} mini-animal blue`}></div>
+              <div key={i} className={`${p.classes.join(' ')} mini-animal blue`}
+              onClick={() => this.clickMiniPawn(p)}/>
 
             )}
 

@@ -2,18 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Field from "./Field.jsx";
 import Dots from "./Dots.jsx";
-import WaitingRoomGreen from "./WaitingRoomGreen.jsx";
-import WaitingRoomBlue from "./WaitingRoomBlue.jsx";
+import WaitingRoom from "./WaitingRoom.jsx";
 
 class Board extends React.Component{
   
-  clickMiniPawn = (pawn) => {
-    this.props.clickMiniPawn(pawn);
-  }
-  
   handleClickPawn = (pawn) => {
     if (pawn) {
-        console.log('clicked ' + pawn.cellNumber);
+        // console.log('clicked ' + pawn.cellNumber);
         if(pawn.available === true){
           this.props.moveHere(pawn.cellNumber);
         }
@@ -28,6 +23,7 @@ class Board extends React.Component{
     let fieldIndex = 0;
     let rowNumber = 1;
     let boardFields = [];
+    let startState = this.props.state;
     let fields = this.props.game;
     let waitingRoomGreen = this.props.waitingRoomGreen;
     let waitingRoomBlue = this.props.waitingRoomBlue;
@@ -54,7 +50,10 @@ class Board extends React.Component{
                                 <td 
                                 key={i} 
                                 data-index={fieldIndex+i}
-                                className={`cell ${p && p.available ? 'cell-available' : ''}`}
+                                className={`cell ${p && p.available ? 
+                                  (this.props.whoMoves === "blue" ? 
+                                    'cell-available-blue' :
+                                    'cell-available-green' ) : ''}`}
                                 onClick={() => this.handleClickPawn(p)}/>
                             );
                           }else{
@@ -68,7 +67,11 @@ class Board extends React.Component{
                               moves += " cell-selected";
                             }
                             if(p.available === true){
-                              moves += " cell-available";
+                              if(this.props.whoMoves === "blue"){
+                                moves += " cell-available-blue";
+                              }else {
+                                moves += " cell-available-green";
+                              }
                             }
                                 
                             return <td key={i} data-index={fieldIndex+i} className={moves} 
@@ -90,16 +93,23 @@ class Board extends React.Component{
     }
 
     let board = <div className="container"> 
-             <WaitingRoomBlue waitingPowns={waitingRoomBlue}/>
+            <WaitingRoom
+              color="blue"
+              whoMoves={this.props.whoMoves}
+              waitingPowns={waitingRoomBlue}
+              clickMiniPawn={this.props.clickMiniPawn}
+            />
             <div className="wrapper">
               <table className="game-box">
                 <tbody>{boardFields}</tbody>
               </table>
               <h1>Catch The Lion</h1>
             </div>
-            <WaitingRoomGreen 
+            <WaitingRoom
+              color="green"
+              whoMoves={this.props.whoMoves}
               waitingPowns={waitingRoomGreen}
-              clickMiniPawn={(pawn) => this.clickMiniPawn(pawn)}
+              clickMiniPawn={this.props.clickMiniPawn}
             />
           </div>;
 

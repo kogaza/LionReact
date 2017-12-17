@@ -25,7 +25,7 @@
   .taken{
     width: 200px;
     height: 130px;
-    border: 2px solid red;
+    // border: 2px solid red;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -75,8 +75,12 @@
   .cell-selected{
     background-color: #fab124;
   }
-  .cell-available{
+  .cell-available-green{
     background-color: #7cfa63;
+    cursor: pointer;
+  }
+  .cell-available-blue{
+    background-color: #5bdeed;
     cursor: pointer;
   }
   .animal{
@@ -94,9 +98,7 @@
   .animal.blue{
     transform: rotate(180deg);
   }
-  .mini-animal.blue{
-    transform: rotate(180deg);
-  }
+
   .dot{
     width: 10%;
     height: 10%;
@@ -162,21 +164,7 @@
     background-image: url("../../images/superChicken.jpeg");
     background-size: cover;
   }
-  // .mini-giraffe{
-  //   background-color: blue;
-  //   background-image: url("../../images/giraffe.jpeg");
-  //   background-size: cover;
-  // }
-  // .mini-elephant{
-  //   background-color: red;  
-  //   background-image: url("../../images/elephant.jpeg");
-  //   background-size: cover;
-  // }
-  // .mini-chicken{
-  //   background-color: yellow;  
-  //   background-image: url("../../images/chicken.jpg");
-  //   background-size: cover;
-  // }
+
   .mini-animal{
     width: 30%;
     height: 45%;
@@ -184,11 +172,27 @@
     border-radius: 8px;
     margin: 2px;
   }
+
   .mini-animal.blue{
     transform: rotate(180deg);
+    &.cell-move{
+      border: 2px solid blue;
+    }
+    &.cell-selected{
+      border: 4px solid blue;
+
+    }
+  }
+  .mini-animal.green{
+    &.cell-move{
+      border: 2px solid green;
+    }
+    &.cell-selected{
+      border: 4px solid green;
+    }    
   }
   .mini-selected{
-    border: 3px solid orange;
+    border: 3px solid rgb(0, 81, 255);
   }
 
   

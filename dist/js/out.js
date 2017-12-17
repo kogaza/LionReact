@@ -9628,13 +9628,9 @@ var _Dots = __webpack_require__(189);
 
 var _Dots2 = _interopRequireDefault(_Dots);
 
-var _WaitingRoomGreen = __webpack_require__(85);
+var _WaitingRoom = __webpack_require__(204);
 
-var _WaitingRoomGreen2 = _interopRequireDefault(_WaitingRoomGreen);
-
-var _WaitingRoomBlue = __webpack_require__(86);
-
-var _WaitingRoomBlue2 = _interopRequireDefault(_WaitingRoomBlue);
+var _WaitingRoom2 = _interopRequireDefault(_WaitingRoom);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9658,11 +9654,9 @@ var Board = function (_React$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Board.__proto__ || Object.getPrototypeOf(Board)).call.apply(_ref, [this].concat(args))), _this), _this.clickMiniPawn = function (pawn) {
-      _this.props.clickMiniPawn(pawn);
-    }, _this.handleClickPawn = function (pawn) {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Board.__proto__ || Object.getPrototypeOf(Board)).call.apply(_ref, [this].concat(args))), _this), _this.handleClickPawn = function (pawn) {
       if (pawn) {
-        console.log('clicked ' + pawn.cellNumber);
+        // console.log('clicked ' + pawn.cellNumber);
         if (pawn.available === true) {
           _this.props.moveHere(pawn.cellNumber);
         } else {
@@ -9680,6 +9674,7 @@ var Board = function (_React$Component) {
       var fieldIndex = 0;
       var rowNumber = 1;
       var boardFields = [];
+      var startState = this.props.state;
       var fields = this.props.game;
       var waitingRoomGreen = this.props.waitingRoomGreen;
       var waitingRoomBlue = this.props.waitingRoomBlue;
@@ -9724,7 +9719,7 @@ var Board = function (_React$Component) {
                 return _react2.default.createElement('td', {
                   key: i,
                   'data-index': fieldIndex + i,
-                  className: 'cell ' + (p && p.available ? 'cell-available' : ''),
+                  className: 'cell ' + (p && p.available ? _this2.props.whoMoves === "blue" ? 'cell-available-blue' : 'cell-available-green' : ''),
                   onClick: function onClick() {
                     return _this2.handleClickPawn(p);
                   } });
@@ -9739,7 +9734,11 @@ var Board = function (_React$Component) {
                   moves += " cell-selected";
                 }
                 if (p.available === true) {
-                  moves += " cell-available";
+                  if (_this2.props.whoMoves === "blue") {
+                    moves += " cell-available-blue";
+                  } else {
+                    moves += " cell-available-green";
+                  }
                 }
 
                 return _react2.default.createElement(
@@ -9760,7 +9759,12 @@ var Board = function (_React$Component) {
       var board = _react2.default.createElement(
         'div',
         { className: 'container' },
-        _react2.default.createElement(_WaitingRoomBlue2.default, { waitingPowns: waitingRoomBlue }),
+        _react2.default.createElement(_WaitingRoom2.default, {
+          color: 'blue',
+          whoMoves: this.props.whoMoves,
+          waitingPowns: waitingRoomBlue,
+          clickMiniPawn: this.props.clickMiniPawn
+        }),
         _react2.default.createElement(
           'div',
           { className: 'wrapper' },
@@ -9779,11 +9783,11 @@ var Board = function (_React$Component) {
             'Catch The Lion'
           )
         ),
-        _react2.default.createElement(_WaitingRoomGreen2.default, {
+        _react2.default.createElement(_WaitingRoom2.default, {
+          color: 'green',
+          whoMoves: this.props.whoMoves,
           waitingPowns: waitingRoomGreen,
-          clickMiniPawn: function clickMiniPawn(pawn) {
-            return _this2.clickMiniPawn(pawn);
-          }
+          clickMiniPawn: this.props.clickMiniPawn
         })
       );
 
@@ -9876,178 +9880,13 @@ nowy.neighbor();
 module.exports = Field;
 
 /***/ }),
-/* 85 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(16);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(19);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var WaitingRoomGreen = function (_React$Component) {
-  _inherits(WaitingRoomGreen, _React$Component);
-
-  function WaitingRoomGreen() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
-    _classCallCheck(this, WaitingRoomGreen);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = WaitingRoomGreen.__proto__ || Object.getPrototypeOf(WaitingRoomGreen)).call.apply(_ref, [this].concat(args))), _this), _this.clickMiniPawn = function (pawn) {
-      if (pawn) {
-        // console.log('clicked ' + pawn.cellNumber);
-        if (1) {
-          console.log("kliku kliku");
-          _this.props.clickMiniPawn(pawn);
-        } else if (pawn.available === true) {
-          _this.props.moveHere(pawn.cellNumber);
-        } else {
-          _this.props.clickPawn(pawn.cellNumber);
-        }
-      }
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-
-  _createClass(WaitingRoomGreen, [{
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
-
-      var waitingPowns = this.props.waitingPowns;
-      console.log("WaitingRoom", waitingPowns);
-      var board = _react2.default.createElement(
-        'div',
-        { className: 'taken taken-green' },
-        waitingPowns.map(function (p, i) {
-          return _react2.default.createElement('div', { key: i, className: p.classes.join(' ') + ' mini-animal',
-            onClick: function onClick() {
-              return _this2.clickMiniPawn(p);
-            } });
-        })
-      );
-
-      return board;
-    }
-  }]);
-
-  return WaitingRoomGreen;
-}(_react2.default.Component);
-
-// WaitingRoomGreen.propTypes = {
-//     moveHere: React.PropTypes.func,
-//     clickPawn: React.PropTypes.func
-// }
-
-module.exports = WaitingRoomGreen;
-
-/***/ }),
-/* 86 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(16);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(19);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var WaitingRoomBlue = function (_React$Component) {
-  _inherits(WaitingRoomBlue, _React$Component);
-
-  function WaitingRoomBlue() {
-    _classCallCheck(this, WaitingRoomBlue);
-
-    return _possibleConstructorReturn(this, (WaitingRoomBlue.__proto__ || Object.getPrototypeOf(WaitingRoomBlue)).apply(this, arguments));
-  }
-
-  _createClass(WaitingRoomBlue, [{
-    key: 'render',
-
-    // constructor(props) {
-    //   super(props);
-    //   this.state = {
-    //     waitingRoom: []
-    //   }
-    // }
-
-    // handleClickPawn = (pawn) => {
-    //   if (pawn) {
-    //       console.log('clicked ' + pawn.cellNumber);
-    //       if(pawn.available === true){
-    //         this.props.moveHere(pawn.cellNumber);
-    //       }
-    //       else {
-    //         this.props.clickPawn(pawn.cellNumber);
-    //       }
-    //   }
-    // }
-
-    value: function render() {
-      var waitingPowns = this.props.waitingPowns;
-      console.log("WaitingRoom", waitingPowns);
-      var board = _react2.default.createElement(
-        'div',
-        { className: 'taken taken-blue' },
-        waitingPowns.map(function (p, i) {
-          return _react2.default.createElement('div', { key: i, className: p.classes.join(' ') + ' mini-animal blue' });
-        })
-      );
-
-      return board;
-    }
-  }]);
-
-  return WaitingRoomBlue;
-}(_react2.default.Component);
-
-// WaitingRoomBlue.propTypes = {
-//     moveHere: React.PropTypes.func,
-//     clickPawn: React.PropTypes.func
-// }
-
-module.exports = WaitingRoomBlue;
-
-/***/ }),
+/* 85 */,
+/* 86 */,
 /* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(88);
-module.exports = __webpack_require__(192);
+module.exports = __webpack_require__(193);
 
 
 /***/ }),
@@ -10075,7 +9914,7 @@ var _Pawn = __webpack_require__(190);
 
 var _Pawn2 = _interopRequireDefault(_Pawn);
 
-var _MiniPawn = __webpack_require__(202);
+var _MiniPawn = __webpack_require__(191);
 
 var _MiniPawn2 = _interopRequireDefault(_MiniPawn);
 
@@ -10083,17 +9922,9 @@ var _Field = __webpack_require__(84);
 
 var _Field2 = _interopRequireDefault(_Field);
 
-var _Move = __webpack_require__(191);
+var _Move = __webpack_require__(192);
 
 var _Move2 = _interopRequireDefault(_Move);
-
-var _WaitingRoomGreen = __webpack_require__(85);
-
-var _WaitingRoomGreen2 = _interopRequireDefault(_WaitingRoomGreen);
-
-var _WaitingRoomBlue = __webpack_require__(86);
-
-var _WaitingRoomBlue2 = _interopRequireDefault(_WaitingRoomBlue);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10121,6 +9952,14 @@ var App = function (_React$Component) {
       // czyszczenie selected i available
       newState.board = newState.board.map(function (pawn) {
         return pawn ? new _Pawn2.default(pawn.cellNumber, pawn.animal, pawn.player, false, false).getState() : null;
+      });
+
+      newState.waitingRoomGreen = newState.waitingRoomGreen.map(function (pawn) {
+        return pawn ? (0, _MiniPawn2.default)(pawn.animal, pawn.player, false) : null;
+      });
+
+      newState.waitingRoomBlue = newState.waitingRoomBlue.map(function (pawn) {
+        return pawn ? (0, _MiniPawn2.default)(pawn.animal, pawn.player, false) : null;
       });
       var currentPawn = newState.board[indexElem];
 
@@ -10165,8 +10004,8 @@ var App = function (_React$Component) {
       _this.setState(newState);
     };
 
-    _this.clickMiniPawn = function (pawn) {
-      console.log("Działa clickMiniPawn");
+    _this.clickMiniPawn = function (pawn, clickedId) {
+      console.log("Działa clickMiniPawn", clickedId, _this);
       // robimy kopien z aktualnego state
       var newState = JSON.parse(JSON.stringify(_this.state));
       // sprawdzam czy zaznaczono odpowiedni knefel
@@ -10179,22 +10018,78 @@ var App = function (_React$Component) {
       });
 
       //
+      var indexMiniElem = void 0;
       //ustawienie select dla miniPawn
-      //
+
+      var greenRoom = newState.waitingRoomGreen;
+      var blueRoom = newState.waitingRoomBlue;
+
+      for (var i = 0; i < greenRoom.length; i++) {
+        // console.log("i", i, "greenRoom",greenRoom[i].animal, "pawnAnimal", pawn.animal);
+        indexMiniElem = greenRoom[i].animal === pawn.animal ? i : indexMiniElem;
+        // console.log("indexMiniElem",indexMiniElem);
+      }
+      // console.log("indexMiniElem",indexMiniElem);
+
+      newState.waitingRoomGreen = newState.waitingRoomGreen.map(function (pawn) {
+        return pawn ? (0, _MiniPawn2.default)(pawn.animal, pawn.player, false) : null;
+      });
+      console.log("green", newState.waitingRoomGreen);
+
+      for (var _i3 = 0; _i3 < blueRoom.length; _i3++) {
+        indexMiniElem = blueRoom[_i3].animal === pawn.animal ? _i3 : indexMiniElem;
+      }
+
+      newState.waitingRoomBlue = newState.waitingRoomBlue.map(function (pawn) {
+        return pawn ? (0, _MiniPawn2.default)(pawn.animal, pawn.player, false) : null;
+      });
+      console.log("blue", newState.waitingRoomBlue);
+
+      var canAvailableCells = [];
+      for (var _i4 = 0; _i4 < 12; _i4++) {
+        canAvailableCells.push(_i4);
+      }
+
+      canAvailableCells.forEach(function (id) {
+        var pawn = newState.board[id];
+        var newPawn = pawn === null || pawn.animal === undefined ? { type: null, available: true, cellNumber: id } : pawn;
+        newState.board[id] = newPawn;
+      });
+
+      // ustawiamy selected elemen
+      console.log("whoMoves", newState.whoMoves);
+
+      var currentPawn = void 0;
+
+      if (newState.whoMoves === "green") {
+        currentPawn = newState.waitingRoomGreen[clickedId];
+
+        newState.selectedCellMini = clickedId;
+        newState.waitingRoomGreen[clickedId] = (0, _MiniPawn2.default)(currentPawn.animal, currentPawn.player, true);
+      } else if (newState.whoMoves === "blue") {
+        currentPawn = newState.waitingRoomBlue[clickedId];
+
+        newState.selectedCellMini = clickedId;
+        newState.waitingRoomBlue[clickedId] = (0, _MiniPawn2.default)(currentPawn.animal, currentPawn.player, true);
+      }
+
+      console.log("selected Mini", newState.selectedCellMini);
+      console.log("waiting Room green", newState.waitingRoomGreen);
 
       _this.setState(newState);
     };
 
     _this.moveHere = function (here) {
       console.log('move here', here, 'from', _this.state.selectedCell);
-      // robimy kopien z aktualnego state
+      // robimy kopie z aktualnego state
+      var startState = JSON.parse(JSON.stringify(_this.state));
       var newState = JSON.parse(JSON.stringify(_this.state));
 
       newState.board = newState.board.map(function (pawn) {
         return pawn ? new _Pawn2.default(pawn.cellNumber, pawn.animal, pawn.player, false, false).getState() : null;
       });
-
-      var pawnToMove = newState.board[_this.state.selectedCell];
+      // console.log("sel",newState.selectedCell,newState.selectedCellMini);
+      var pawnToMove = newState.selectedCellMini === false ? newState.board[_this.state.selectedCell] : newState.whoMoves === "green" ? newState.waitingRoomGreen[_this.state.selectedCellMini] : newState.waitingRoomBlue[_this.state.selectedCellMini];
 
       //superChicken
       if (pawnToMove.animal === "chicken" && pawnToMove.player === "green" && (here === 0 || here === 1 || here === 2)) {
@@ -10207,15 +10102,26 @@ var App = function (_React$Component) {
       console.log("SC", pawnToMove, "here", here);
       var newPawn = new _Pawn2.default(here, pawnToMove.animal, pawnToMove.player, false, false).getState();
 
-      console.log("Stare pole", newState.board[here]);
+      // console.log("Stare pole",newState.board[here]);
       newState.board[here].player = newState.board[here].player == "green" ? "blue" : "green";
-      var newMiniPawn = new _MiniPawn2.default(newState.board[here].animal, newState.board[here].player).getState();
-      console.log("aaaaaa", newMiniPawn);
+      if (newState.board[here].animal === "superChicken") {
+        newState.board[here].animal = "chicken";
+      }
+      if (newState.board[here].animal === "lion") {
+        alert('Koniec gry - ' + newState.whoMoves + ' wygrali');
+        location.reload();
+      }
+      var newMiniPawn = (0, _MiniPawn2.default)(newState.board[here].animal, newState.board[here].player);
+      // console.log("aaaaaa",newMiniPawn);
 
       newState.board[here].animal !== undefined && (newState.whoMoves === "green" ? newState.waitingRoomGreen.push(newMiniPawn) : newState.waitingRoomBlue.push(newMiniPawn));
       newState.board[here] = newPawn;
-      newState.board[_this.state.selectedCell] = null;
+
+      newState.selectedCellMini === false ? newState.board[_this.state.selectedCell] = null : newState.whoMoves === "green" ? newState.waitingRoomGreen.splice(_this.state.selectedCellMini, 1) : newState.waitingRoomBlue.splice(_this.state.selectedCellMini, 1);
+
       newState.whoMoves = newState.whoMoves == "green" ? "blue" : "green";
+      newState.selectedCell = false;
+      newState.selectedCellMini = false;
 
       _this.setState(newState);
     };
@@ -10224,12 +10130,12 @@ var App = function (_React$Component) {
       isPlaying: true, //gra aktywna
       whoMoves: 'green', //czyj ruch: gracz blue (góra), gracz dół (green)
       selectedCell: false, //które pole jest kliknięte
+      selectedCellMini: false, //które pole Mini jest kliknięte
       availableCells: [], //dostępne pola do ruchu dla zaznaczonego
       waitingRoomGreen: [],
       waitingRoomBlue: [],
       //opis figur na planszy
       board: [new _Pawn2.default(0, 'giraffe', "blue").getState(), new _Pawn2.default(1, 'lion', "blue").getState(), new _Pawn2.default(2, 'elephant', "blue").getState(), null, new _Pawn2.default(4, 'chicken', "blue").getState(), null, null, new _Pawn2.default(7, 'chicken', "green").getState(), null, new _Pawn2.default(9, 'elephant', "green").getState(), new _Pawn2.default(10, 'lion', "green").getState(), new _Pawn2.default(11, 'giraffe', "green").getState()]
-
     };
     return _this;
   }
@@ -10248,9 +10154,7 @@ var App = function (_React$Component) {
         moveHere: function moveHere(here) {
           return _this2.moveHere(here);
         },
-        clickMiniPawn: function clickMiniPawn(pawn) {
-          return _this2.clickMiniPawn(pawn);
-        },
+        clickMiniPawn: this.clickMiniPawn,
         waitingRoomGreen: this.state.waitingRoomGreen,
         waitingRoomBlue: this.state.waitingRoomBlue
       });
@@ -22914,6 +22818,24 @@ module.exports = Pawn;
 "use strict";
 
 
+function getMiniPawn(animal, player, selected) {
+  return {
+    animal: animal,
+    player: player,
+    selected: selected,
+    classes: [animal, player]
+  };
+}
+
+module.exports = getMiniPawn;
+
+/***/ }),
+/* 192 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(16);
@@ -22962,13 +22884,12 @@ var Move = function (_React$Component) {
 module.exports = Move;
 
 /***/ }),
-/* 192 */
+/* 193 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 193 */,
 /* 194 */,
 /* 195 */,
 /* 196 */,
@@ -22977,7 +22898,9 @@ module.exports = Move;
 /* 199 */,
 /* 200 */,
 /* 201 */,
-/* 202 */
+/* 202 */,
+/* 203 */,
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22985,102 +22908,85 @@ module.exports = Move;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _react = __webpack_require__(16);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(19);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var MiniPawn = function () {
-  function MiniPawn(animal, player, selected) {
-    _classCallCheck(this, MiniPawn);
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-    this.animal = animal;
-    this.player = player;
-    this.selected = selected;
-    this.classes = [animal, player];
-    // this.whatMoves();
-  }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-  _createClass(MiniPawn, [{
-    key: "getState",
-    value: function getState() {
-      return {
-        animal: this.animal,
-        player: this.player,
-        classes: this.classes,
-        canMove: this.canMove,
-        selected: this.selected
+var WaitingRoom = function (_React$Component) {
+  _inherits(WaitingRoom, _React$Component);
 
-      };
+  function WaitingRoom() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, WaitingRoom);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
     }
 
-    // whatMoves() {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = WaitingRoom.__proto__ || Object.getPrototypeOf(WaitingRoom)).call.apply(_ref, [this].concat(args))), _this), _this.clickMiniPawn = function (pawn, i) {
+      if (pawn) {
+        console.log('i2', i);
+        _this.props.clickMiniPawn(pawn, i);
+      }
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
 
-    //   if(this.animal === "elephant") {
-    //     this.canMove = [
-    //       this.cellNumber - 4,
-    //       this.cellNumber - 2,
-    //       this.cellNumber + 2,
-    //       this.cellNumber + 4
-    //     ].filter((cell)=>(cell >=0 && cell<12))
-    //   }   
-    //   else if(this.animal === "lion") {
-    //     this.canMove = [
-    //       this.cellNumber - 4,
-    //       this.cellNumber - 3,
-    //       this.cellNumber - 2,
-    //       this.cellNumber - 1,
-    //       this.cellNumber + 1,
-    //       this.cellNumber + 2,
-    //       this.cellNumber + 3,
-    //       this.cellNumber + 4
-    //     ].filter((cell)=>(cell >=0 && cell<12))
-    //   }
-    //   else if(this.animal === "giraffe") {
-    //     this.canMove = [
-    //       this.cellNumber - 3,
-    //       this.cellNumber - 1,
-    //       this.cellNumber + 1,
-    //       this.cellNumber + 3
-    //     ].filter((cell)=>(cell >=0 && cell<12))
-    //   }
-    //   else if(this.animal === "chicken") {
-    //     if(this.player === "blue") this.canMove = [ this.cellNumber + 3 ]
-    //     else this.canMove = [this.cellNumber - 3]
-    //   }
-    //   else if(this.animal === "superChicken") {
-    //     if(this.player === "green"){
-    //       this.canMove = [
-    //         this.cellNumber - 4,
-    //         this.cellNumber - 3,
-    //         this.cellNumber - 2,
-    //         this.cellNumber - 1,
-    //         this.cellNumber + 1,
-    //         this.cellNumber + 3
-    //       ].filter((cell)=>(cell >=0 && cell<12))
-    //     }
-    //     else {
-    //       this.canMove = [
-    //         this.cellNumber - 3,
-    //         this.cellNumber - 1,
-    //         this.cellNumber + 1,
-    //         this.cellNumber + 2,
-    //         this.cellNumber + 3,
-    //         this.cellNumber + 4
-    //       ].filter((cell)=>(cell >=0 && cell<12))
-    //     }
-    //   }
-    // }
+  _createClass(WaitingRoom, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
 
+      var waitingPowns = this.props.waitingPowns;
 
-    // getAvailableMoves(boardArray) {
-    //   this.availableMoves = [];
+      var board = _react2.default.createElement(
+        'div',
+        { className: 'taken taken-' + this.props.color },
+        waitingPowns.map(function (p, i) {
 
-    // }
+          var classMini = p.classes.join(' ') + " mini-animal";
+          if (_this2.props.whoMoves === p.player) {
+            classMini += " cell-move";
+          }
 
+          if (p.selected === true) {
+            classMini += " cell-selected";
+          }
+
+          return _react2.default.createElement('div', { key: i, className: classMini,
+            onClick: function onClick() {
+              return console.log('i', i) || _this2.clickMiniPawn(p, i);
+            } });
+        })
+      );
+
+      return board;
+    }
   }]);
 
-  return MiniPawn;
-}();
+  return WaitingRoom;
+}(_react2.default.Component);
 
-module.exports = MiniPawn;
+// WaitingRoomGreen.propTypes = {
+//     moveHere: React.PropTypes.func,
+//     clickPawn: React.PropTypes.func
+// }
+
+module.exports = WaitingRoom;
 
 /***/ })
 /******/ ]);
