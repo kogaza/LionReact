@@ -46,10 +46,10 @@ body {
   border-collapse: collapse; }
 
 .cell-label {
-  color: #f5773a;
+  color: black;
   text-align: center;
   vertical-align: middle;
-  padding: 8px; }
+  padding-top: 8px; }
 
 .cell {
   border: 2px dashed #f5773a;

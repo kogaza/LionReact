@@ -130,13 +130,16 @@ class App extends React.Component {
   }
   
   clickMiniPawn = (pawn, clickedId) => {
-    console.log("Działa clickMiniPawn", clickedId, this);
+    console.log("Działa clickMiniPawn", clickedId, pawn);
      // robimy kopien z aktualnego state
      const newState = JSON.parse(JSON.stringify(this.state));
          // sprawdzam czy zaznaczono odpowiedni knefel
-    // if (this.state.board[indexElem].player !== this.state.whoMoves) {
-    //    return;
-    // }
+    if (pawn.player === "green" && this.state.waitingRoomGreen[clickedId].player !== this.state.whoMoves) {
+       return;
+    }
+    if (pawn.player === "blue" && this.state.waitingRoomBlue[clickedId].player !== this.state.whoMoves) {
+       return;
+    }
     // czyszczenie selected i available
     newState.board = newState.board.map((pawn) =>
     pawn ?
