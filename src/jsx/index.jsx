@@ -74,6 +74,10 @@ class App extends React.Component {
         ) :
         null
     );
+
+    newState.selectedCell = false;
+    newState.selectedCellMini = false;
+    
     const currentPawn = newState.board[indexElem];
 
     // ustawiamy selected elemen
@@ -130,7 +134,6 @@ class App extends React.Component {
   }
   
   clickMiniPawn = (pawn, clickedId) => {
-    console.log("Działa clickMiniPawn", clickedId, pawn);
      // robimy kopien z aktualnego state
      const newState = JSON.parse(JSON.stringify(this.state));
          // sprawdzam czy zaznaczono odpowiedni knefel
@@ -152,21 +155,6 @@ class App extends React.Component {
         null
     );
 
-
-    //
-    let indexMiniElem; 
-    //ustawienie select dla miniPawn
-
-    const greenRoom = newState.waitingRoomGreen;
-    const blueRoom = newState.waitingRoomBlue;
-
-    for(let i = 0; i < greenRoom.length; i++){
-      // console.log("i", i, "greenRoom",greenRoom[i].animal, "pawnAnimal", pawn.animal);
-        indexMiniElem = greenRoom[i].animal === pawn.animal ? i : indexMiniElem;    
-        // console.log("indexMiniElem",indexMiniElem);
-    }
-    // console.log("indexMiniElem",indexMiniElem);
-
     newState.waitingRoomGreen = newState.waitingRoomGreen.map((pawn) =>
     pawn ?
         getMiniPawn(
@@ -176,11 +164,6 @@ class App extends React.Component {
         ) :
         null
     );
-    console.log("green",newState.waitingRoomGreen);
-
-    for(let i = 0; i < blueRoom.length; i++){
-        indexMiniElem = blueRoom[i].animal === pawn.animal ? i : indexMiniElem;    
-    }
 
     newState.waitingRoomBlue = newState.waitingRoomBlue.map((pawn) =>
     pawn ?
@@ -191,7 +174,29 @@ class App extends React.Component {
         ) :
         null
     );
-    console.log("blue",newState.waitingRoomBlue);
+
+    newState.selectedCell = false;
+    newState.selectedCellMini = false;
+
+    newState.waitingRoomGreen = newState.waitingRoomGreen.map((pawn) =>
+    pawn ?
+        getMiniPawn(
+        pawn.animal,
+        pawn.player,
+        false
+        ) :
+        null
+    );
+
+    newState.waitingRoomBlue = newState.waitingRoomBlue.map((pawn) =>
+    pawn ?
+        getMiniPawn(
+        pawn.animal,
+        pawn.player,
+        false
+        ) :
+        null
+    );
 
     let canAvailableCells=[];
     for(let i = 0; i < 12; i++){
@@ -206,7 +211,6 @@ class App extends React.Component {
     })
 
     // ustawiamy selected elemen
-    console.log("whoMoves",newState.whoMoves);
 
     let currentPawn;
 
@@ -231,16 +235,12 @@ class App extends React.Component {
       );
     }
 
-    
-
-    console.log("selected Mini",newState.selectedCellMini);
-    console.log("waiting Room green",newState.waitingRoomGreen);
+  
 
     this.setState(newState);
   }
 
   moveHere = (here) => {
-    console.log('move here', here, 'from', this.state.selectedCell);
     // robimy kopie z aktualnego state
     const startState = JSON.parse(JSON.stringify(this.state));
     const newState = JSON.parse(JSON.stringify(this.state));
@@ -255,7 +255,7 @@ class App extends React.Component {
       ).getState() :
       null
     );
-// console.log("sel",newState.selectedCell,newState.selectedCellMini);
+
     const pawnToMove = newState.selectedCellMini === false ?
       newState.board[this.state.selectedCell] :
       newState.whoMoves === "green" ? 
@@ -278,7 +278,6 @@ class App extends React.Component {
       pawnToMove.animal = "superChicken";
     }
 
-    console.log("SC",pawnToMove, "here",here);
     const newPawn = 
       new Pawn(
         here,
@@ -287,7 +286,6 @@ class App extends React.Component {
         false, false
       ).getState()
 
-    // console.log("Stare pole",newState.board[here]);
     newState.board[here].player = newState.board[here].player == "green" ? "blue" : "green";
     if(newState.board[here].animal === "superChicken"){
       newState.board[here].animal = "chicken";
@@ -301,7 +299,6 @@ class App extends React.Component {
           newState.board[here].animal,
           newState.board[here].player
       )
-      // console.log("aaaaaa",newMiniPawn);
 
     newState.board[here].animal !== undefined && 
       (newState.whoMoves === "green" ?

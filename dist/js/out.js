@@ -9656,7 +9656,6 @@ var Board = function (_React$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Board.__proto__ || Object.getPrototypeOf(Board)).call.apply(_ref, [this].concat(args))), _this), _this.handleClickPawn = function (pawn) {
       if (pawn) {
-        // console.log('clicked ' + pawn.cellNumber);
         if (pawn.available === true) {
           _this.props.moveHere(pawn.cellNumber);
         } else {
@@ -9874,7 +9873,7 @@ var Field = function () {
 }();
 
 var nowy = new Field(6);
-// console.log(nowy);
+
 nowy.neighbor();
 
 module.exports = Field;
@@ -9959,6 +9958,10 @@ var App = function (_React$Component) {
       newState.waitingRoomBlue = newState.waitingRoomBlue.map(function (pawn) {
         return pawn ? (0, _MiniPawn2.default)(pawn.animal, pawn.player, false) : null;
       });
+
+      newState.selectedCell = false;
+      newState.selectedCellMini = false;
+
       var currentPawn = newState.board[indexElem];
 
       // ustawiamy selected elemen
@@ -10003,7 +10006,6 @@ var App = function (_React$Component) {
     };
 
     _this.clickMiniPawn = function (pawn, clickedId) {
-      console.log("Działa clickMiniPawn", clickedId, pawn);
       // robimy kopien z aktualnego state
       var newState = JSON.parse(JSON.stringify(_this.state));
       // sprawdzam czy zaznaczono odpowiedni knefel
@@ -10018,37 +10020,28 @@ var App = function (_React$Component) {
         return pawn ? new _Pawn2.default(pawn.cellNumber, pawn.animal, pawn.player, false, false).getState() : null;
       });
 
-      //
-      var indexMiniElem = void 0;
-      //ustawienie select dla miniPawn
-
-      var greenRoom = newState.waitingRoomGreen;
-      var blueRoom = newState.waitingRoomBlue;
-
-      for (var i = 0; i < greenRoom.length; i++) {
-        // console.log("i", i, "greenRoom",greenRoom[i].animal, "pawnAnimal", pawn.animal);
-        indexMiniElem = greenRoom[i].animal === pawn.animal ? i : indexMiniElem;
-        // console.log("indexMiniElem",indexMiniElem);
-      }
-      // console.log("indexMiniElem",indexMiniElem);
-
       newState.waitingRoomGreen = newState.waitingRoomGreen.map(function (pawn) {
         return pawn ? (0, _MiniPawn2.default)(pawn.animal, pawn.player, false) : null;
       });
-      console.log("green", newState.waitingRoomGreen);
-
-      for (var _i3 = 0; _i3 < blueRoom.length; _i3++) {
-        indexMiniElem = blueRoom[_i3].animal === pawn.animal ? _i3 : indexMiniElem;
-      }
 
       newState.waitingRoomBlue = newState.waitingRoomBlue.map(function (pawn) {
         return pawn ? (0, _MiniPawn2.default)(pawn.animal, pawn.player, false) : null;
       });
-      console.log("blue", newState.waitingRoomBlue);
+
+      newState.selectedCell = false;
+      newState.selectedCellMini = false;
+
+      newState.waitingRoomGreen = newState.waitingRoomGreen.map(function (pawn) {
+        return pawn ? (0, _MiniPawn2.default)(pawn.animal, pawn.player, false) : null;
+      });
+
+      newState.waitingRoomBlue = newState.waitingRoomBlue.map(function (pawn) {
+        return pawn ? (0, _MiniPawn2.default)(pawn.animal, pawn.player, false) : null;
+      });
 
       var canAvailableCells = [];
-      for (var _i4 = 0; _i4 < 12; _i4++) {
-        canAvailableCells.push(_i4);
+      for (var i = 0; i < 12; i++) {
+        canAvailableCells.push(i);
       }
 
       canAvailableCells.forEach(function (id) {
@@ -10058,7 +10051,6 @@ var App = function (_React$Component) {
       });
 
       // ustawiamy selected elemen
-      console.log("whoMoves", newState.whoMoves);
 
       var currentPawn = void 0;
 
@@ -10074,14 +10066,10 @@ var App = function (_React$Component) {
         newState.waitingRoomBlue[clickedId] = (0, _MiniPawn2.default)(currentPawn.animal, currentPawn.player, true);
       }
 
-      console.log("selected Mini", newState.selectedCellMini);
-      console.log("waiting Room green", newState.waitingRoomGreen);
-
       _this.setState(newState);
     };
 
     _this.moveHere = function (here) {
-      console.log('move here', here, 'from', _this.state.selectedCell);
       // robimy kopie z aktualnego state
       var startState = JSON.parse(JSON.stringify(_this.state));
       var newState = JSON.parse(JSON.stringify(_this.state));
@@ -10089,7 +10077,7 @@ var App = function (_React$Component) {
       newState.board = newState.board.map(function (pawn) {
         return pawn ? new _Pawn2.default(pawn.cellNumber, pawn.animal, pawn.player, false, false).getState() : null;
       });
-      // console.log("sel",newState.selectedCell,newState.selectedCellMini);
+
       var pawnToMove = newState.selectedCellMini === false ? newState.board[_this.state.selectedCell] : newState.whoMoves === "green" ? newState.waitingRoomGreen[_this.state.selectedCellMini] : newState.waitingRoomBlue[_this.state.selectedCellMini];
 
       //superChicken
@@ -10100,10 +10088,8 @@ var App = function (_React$Component) {
         pawnToMove.animal = "superChicken";
       }
 
-      console.log("SC", pawnToMove, "here", here);
       var newPawn = new _Pawn2.default(here, pawnToMove.animal, pawnToMove.player, false, false).getState();
 
-      // console.log("Stare pole",newState.board[here]);
       newState.board[here].player = newState.board[here].player == "green" ? "blue" : "green";
       if (newState.board[here].animal === "superChicken") {
         newState.board[here].animal = "chicken";
@@ -10113,7 +10099,6 @@ var App = function (_React$Component) {
         location.reload();
       }
       var newMiniPawn = (0, _MiniPawn2.default)(newState.board[here].animal, newState.board[here].player);
-      // console.log("aaaaaa",newMiniPawn);
 
       newState.board[here].animal !== undefined && (newState.whoMoves === "green" ? newState.waitingRoomGreen.push(newMiniPawn) : newState.waitingRoomBlue.push(newMiniPawn));
       newState.board[here] = newPawn;
@@ -22772,7 +22757,6 @@ var WaitingRoom = function (_React$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = WaitingRoom.__proto__ || Object.getPrototypeOf(WaitingRoom)).call.apply(_ref, [this].concat(args))), _this), _this.clickMiniPawn = function (pawn, i) {
       if (pawn) {
-        console.log('i2', i);
         _this.props.clickMiniPawn(pawn, i);
       }
     }, _temp), _possibleConstructorReturn(_this, _ret);
@@ -22801,7 +22785,7 @@ var WaitingRoom = function (_React$Component) {
 
           return _react2.default.createElement('div', { key: i, className: classMini,
             onClick: function onClick() {
-              return console.log('i', i) || _this2.clickMiniPawn(p, i);
+              return _this2.clickMiniPawn(p, i);
             } });
         })
       );

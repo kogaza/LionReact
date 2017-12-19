@@ -5,7 +5,6 @@ class WaitingRoom extends React.Component {
 
   clickMiniPawn = (pawn, i) => {
     if (pawn) {
-      console.log('i2', i);
       this.props.clickMiniPawn(pawn, i);
 
     }
@@ -28,7 +27,7 @@ class WaitingRoom extends React.Component {
         }
 
         return <div key={i} className={classMini}
-          onClick={() => console.log('i', i) || this.clickMiniPawn(p, i)} />
+          onClick={() => this.clickMiniPawn(p, i)} />
       }
       )}
 

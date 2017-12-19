@@ -6,7 +6,7 @@ class CanMoves extends React.Component{
   
   render(){
 
-    console.log(this.props.canMove);
+    // console.log(this.props.canMove);
     
     return <div>  </div>
          

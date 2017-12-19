@@ -19,7 +19,7 @@ class Pawn {
           classes: this.classes,
           canMove: this.canMove,
           selected: this.selected,
-          available: this.available,
+          available: this.available
           
       }
   }

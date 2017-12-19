@@ -123,7 +123,7 @@ class Field {
 }
 
 let nowy = new Field(6);
-// console.log(nowy);
+
 nowy.neighbor();
 
 module.exports = Field;

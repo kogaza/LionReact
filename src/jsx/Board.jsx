@@ -8,7 +8,6 @@ class Board extends React.Component{
   
   handleClickPawn = (pawn) => {
     if (pawn) {
-        // console.log('clicked ' + pawn.cellNumber);
         if(pawn.available === true){
           this.props.moveHere(pawn.cellNumber);
         }
