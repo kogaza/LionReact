@@ -17,6 +17,11 @@ class Board extends React.Component{
     }
   }
 
+  startGame = () => {
+    console.log("start gry");
+    location.reload();
+  }
+
   render(){
 
     let fieldIndex = 0;
@@ -102,7 +107,8 @@ class Board extends React.Component{
               <table className="game-box">
                 <tbody>{boardFields}</tbody>
               </table>
-              <h1>Catch The Lion</h1>
+              <h1>Złap Lwa</h1>
+              <button className="start-game" onClick={() => this.startGame()}>Nowa gra</button>
             </div>
             <WaitingRoom
               color="green"
@@ -110,6 +116,8 @@ class Board extends React.Component{
               waitingPowns={waitingRoomGreen}
               clickMiniPawn={this.props.clickMiniPawn}
             />
+            <div className="buttons">
+            </div>
           </div>;
 
     return  board;

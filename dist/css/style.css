@@ -182,3 +182,7 @@ body {
 
 .mini-selected {
   border: 3px solid #0051ff; }
+
+.start-game {
+  border-radius: 3px;
+  cursor: pointer; }

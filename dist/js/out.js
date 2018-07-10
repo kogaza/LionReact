@@ -9662,6 +9662,9 @@ var Board = function (_React$Component) {
           _this.props.clickPawn(pawn.cellNumber);
         }
       }
+    }, _this.startGame = function () {
+      console.log("start gry");
+      location.reload();
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -9779,7 +9782,14 @@ var Board = function (_React$Component) {
           _react2.default.createElement(
             'h1',
             null,
-            'Catch The Lion'
+            'Z\u0142ap Lwa'
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'start-game', onClick: function onClick() {
+                return _this2.startGame();
+              } },
+            'Nowa gra'
           )
         ),
         _react2.default.createElement(_WaitingRoom2.default, {
@@ -9787,7 +9797,8 @@ var Board = function (_React$Component) {
           whoMoves: this.props.whoMoves,
           waitingPowns: waitingRoomGreen,
           clickMiniPawn: this.props.clickMiniPawn
-        })
+        }),
+        _react2.default.createElement('div', { className: 'buttons' })
       );
 
       return board;
