@@ -17,14 +17,15 @@ body {
   justify-content: center; }
 
 .wrapper {
+  flex: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center; }
 
 .taken {
-  width: 200px;
-  height: 130px;
+  flex: 1;
+  height: 50vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -161,8 +162,8 @@ body {
   background-size: cover; }
 
 .mini-animal {
-  width: 30%;
-  height: 45%;
+  width: 80px;
+  height: 80px;
   background-color: #fff;
   border-radius: 8px;
   margin: 2px; }
@@ -186,3 +187,31 @@ body {
 .start-game {
   border-radius: 3px;
   cursor: pointer; }
+
+h1 {
+  font-size: 20px; }
+
+@media screen and (max-width: 800px) {
+  .taken {
+    flex: 2; }
+  .wrapper {
+    flex: 2; }
+  h1 {
+    margin: 10px 0; }
+  .mini-animal {
+    width: 40px;
+    height: 40px; } }
+
+@media screen and (max-width: 600px) and (orientation: portrait) {
+  .taken {
+    flex: 1;
+    width: 65px;
+    height: 200px; }
+  .mini-animal {
+    width: 40px;
+    height: 40px; } }
+
+@media screen and (max-width: 400px) and (orientation: portrait) {
+  .mini-animal {
+    width: 30px;
+    height: 30px; } }
